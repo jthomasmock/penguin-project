@@ -1,12 +1,13 @@
 ### RMarkdown Readme
 
-You will want to install the following packages:
+You will want to install the following packages if you haven't already:
 
 ```{r}
 
 all_packages <- c(
   "palmerpenguins", "rmarkdown", "bslib", "tidyverse", "reactable", "DT",
-  "whisker", "glue", "flexdashboard", "plotly", "blastula", "shiny", "gt"
+  "whisker", "glue", "flexdashboard", "plotly", "blastula", "shiny", "gt",
+  "reticulate", "xaringan", "distill"
   )
 
 install.packages(all_packages)
