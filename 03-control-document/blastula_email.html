@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> <!-- utf-8 works for most cases -->
+<meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
+<meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
+<meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no"> <!-- Tell iOS not to automatically link certain text strings. -->
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
+<!--[if gte mso 9]>
+<xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+<title>Penguins Report</title>
+<style>
+body {
+font-family: Helvetica, sans-serif;
+font-size: 14px;
+}
+.content {
+background-color: white;
+}
+.content .message-block {
+margin-bottom: 24px;
+}
+.header .message-block, .footer message-block {
+margin-bottom: 12px;
+}
+img {
+max-width: 100%;
+}
+@media only screen and (max-width: 767px) {
+.container {
+width: 100%;
+}
+.articles, .articles tr, .articles td {
+display: block;
+width: 100%;
+}
+.article {
+margin-bottom: 24px;
+}
+}
+</style>
+</head>
+<body style="background-color:#f6f6f6;font-family:Helvetica, sans-serif;color:#222;margin:0;padding:0;"><div style="text-align: center; background:#fcfcfc"><h2 style="margin-bottom: 0; padding-bottom: 0;">This is an email preview for RStudio Connect</h2><p style="text-align: center; background:#fcfcfc; padding-top: 0; margin-top: 0;">Use <code>attach_connect_email(preview = FALSE)</code> to attach without this preview.<br><br><strong><span style="font-variant: small-caps;">email subject: </span></strong>Penguin Report<br></p><hr></div>
+<table width="85%" align="center" class="container" style="max-width: 1000px;">
+<tr>
+<td style="padding:24px;">
+<div class="header" style="font-family:Helvetica, sans-serif;color:#999999;font-size:12px;font-weight:normal;margin:0 0 24px 0;text-align:center;">
+</div>
+<table width="100%" class="content" style="background-color:white;">
+<tr>
+<td style="padding:12px;"><p>Important update on the state of the penguins!</p></td>
+</tr>
+</table>
+<div class="footer" style="font-family:Helvetica, sans-serif;color:#999999;font-size:12px;font-weight:normal;margin:24px 0 0 0;">
+
+<p>This message was generated on Wednesday, August 25, 2021 at 9:05 PM (UTC).</p>
+
+<p>This Version: <a href="https://connect.example.com/content/1234/_rev5678">https://connect.example.com/content/1234/_rev5678</a><br />
+Latest Version: <a href="https://connect.example.com/content/1234/">https://connect.example.com/content/1234/</a></p>
+
+<p>If you wish to stop receiving emails for this document, you may <a href="https://connect.example.com/connect/#/apps/1234/subscriptions">unsubscribe here</a>.</p>
+
+<p>If HTML documents are attached, they may not render correctly when viewed in some email clients. For a better experience, download HTML documents to disk before opening in a web browser.</p>
+</div>
+</td>
+</tr>
+</table>
+</body>
+</html>

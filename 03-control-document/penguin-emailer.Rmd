@@ -1,0 +1,27 @@
+---
+title: "Penguins"
+date: 2020-08-11
+output: html_document
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(blastula)
+```
+
+```{r penguin-plot, echo = FALSE}
+penguins %>% 
+  filter(species == "Adelie", 
+         !is.na(body_mass_g)) %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+
+
+```{r connect_email, echo = FALSE}
+render_connect_email(input = "penguin-email.Rmd") %>%
+  attach_connect_email(
+    subject = "Penguin Report"
+  )
+```

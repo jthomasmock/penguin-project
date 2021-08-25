@@ -1,0 +1,24 @@
+---
+title: "Penguin Report"
+output: html_document
+---
+  
+```{r penguin function, include=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(glue)
+knitr::opts_chunk$set(echo=FALSE, fig.width=6, 
+  message=FALSE)
+
+source("multiplot.R")
+
+penguins <- palmerpenguins::penguins %>% 
+  filter(!is.na(bill_length_mm),  
+   !is.na(flipper_length_mm))
+```
+
+```{r loop-output, results="asis"}
+distinct(penguins, as.character(species)) %>% 
+  pull() %>% 
+  walk(multiplot)
+```

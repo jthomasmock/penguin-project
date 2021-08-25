@@ -1,0 +1,72 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(reactable)
+library(plotly)
+library(crosstalk)
+library(htmltools)
+```
+
+```{r, echo = FALSE}
+small_df <- palmerpenguins::penguins %>% 
+  select(species, sex, flipper_length_mm, body_mass_g) %>% 
+  na.omit()
+
+pen_df <- SharedData$new(small_df)
+
+x <- list(title = "Flipper Length (mm)", range = c(170, 240))
+y <- list(title = "Body Mass (g)", range = c(2500, 6500))
+
+plotly_graphic <- plot_ly(pen_df, 
+                          x = ~flipper_length_mm, 
+                          y = ~body_mass_g, 
+                          color = ~species,
+                          text = ~species) %>% 
+  add_markers() %>% 
+  layout(
+    xaxis = ~x, 
+    yaxis = ~y
+    ) %>%
+  highlight(
+    on = "plotly_selected", 
+    off = "plotly_doubleclick", 
+    persistent = FALSE
+            ) %>% 
+  config(displaylogo = FALSE)
+
+
+
+
+reactable_table <-  reactable(
+  pen_df,
+  columns = list(
+    species = colDef("Species"),
+    sex = colDef("Sex", cell = function(value){
+      if (value == "male") "Male" else "Female"}),
+    flipper_length_mm = colDef("Flipper Length"),
+    body_mass_g = colDef("Body Mass"))
+  )
+```
+
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+
+div(
+  h1("Penguin Data"),
+  h3("Filter by: Sex, Species, or Body Mass"),
+  br(),
+  bscols(
+    widths = c(2, 10),
+    list(
+      filter_checkbox("sex", "Sex", pen_df, ~sex),
+      filter_checkbox("species", "Species", pen_df, ~species),
+      filter_slider("mass", "Body Mass (g)", pen_df, ~body_mass_g)
+    ),
+    plotly_graphic,
+  br(),
+  reactable_table
+  )
+)
+```

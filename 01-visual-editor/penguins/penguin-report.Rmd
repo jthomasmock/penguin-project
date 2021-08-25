@@ -1,0 +1,31 @@
+---
+title: " Penguin Report"
+author: "Thomas Mock"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(palmerpenguins)
+
+smaller <- penguins %>% 
+  filter(species == "Adelie", 
+         !is.na(body_mass_g))
+```
+
+We have data about `r nrow(penguins)` penguins. Only 
+`r nrow(penguins) - nrow(smaller)` are classified as Adelie. The distribution of the 
+Adelie penguins are shown below:
+
+```{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+
+### Mating
+
+The mating season begins with the Antarctic spring in October. The penguins create nests by piling little stones in circles. Once the egg is laid in December the parents take turns incubating the egg and going to hunt. The parent that stays behind does not eat during their turn with the egg. Once the hatched chick is about 3 weeks old both parents will abandon it, returning to the sea to hunt. The downy chicks gather into a group called a crèche to keep each other warm. They will start to hunt at about 9 weeks old once their down has been replaced with waterproof feathers.

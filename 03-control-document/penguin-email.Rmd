@@ -1,0 +1,32 @@
+---
+title: "Penguins Report"
+date: 2020-08-11
+output: blastula::blastula_email
+---
+
+
+```{r packages, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+Important update on the state of the penguins!
+
+```{r penguin-plot, echo = FALSE}
+```
+
+```{r, echo = FALSE}
+penguins %>% 
+  na.omit() %>% 
+  group_by(species, sex) %>% 
+  summarise(
+    n=n(),
+    across(
+      c(bill_length_mm, body_mass_g),
+      .fns = list(mean = mean, sd = sd)
+    ),
+    .groups = "drop"
+  ) %>% 
+  gt::gt(groupname_col = "species", rowname_col = "sex")
+```
+

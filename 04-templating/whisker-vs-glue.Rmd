@@ -1,0 +1,24 @@
+---
+output: html_document
+---
+
+```{r}
+library(glue)
+library(whisker)
+```
+
+```{r}
+glue::glue("There are {nrow(mtcars)} cars in the mtcars dataset!")
+```
+
+```{r}
+rows_in <- nrow(mtcars)
+
+# succeeds!
+whisker::whisker.render("There are {{rows_in}} rows in the mtcars dataset!")
+
+#Fails
+whisker::whisker.render("There are {{nrow(mtcars)}} rows in the mtcars dataset!")
+
+```
+

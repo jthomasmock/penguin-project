@@ -1,0 +1,74 @@
+---
+title: "Important Penguin Analysis"
+output:
+  html_document:
+    theme:
+      yeti
+    code_folding: show
+---
+
+![Diagram of penguin head with indication of bill length and bill depth.](https://allisonhorst.github.io/palmerpenguins/reference/figures/culmen_depth.png){width="523"}
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(reticulate)
+penguin_df <- penguins
+```
+
+For this `python` example, I have adapted the code as seen in an article by [Ekta Sharma](https://towardsdatascience.com/plotly-pandas-for-the-palmer-penguins-f5cdab3c16c8) on the Palmer Penguins dataset, go and check it out!
+
+```{python}
+import pandas as pd
+import os
+
+# add the R df into Python
+penguins_df = r.penguin_df
+```
+
+### Initial explore
+
+Instead of `skimr` we can use `describe()`.
+
+```{python}
+penguins_df[["species", "sex", "body_mass_g", "flipper_length_mm", "bill_length_mm"]].dropna().describe(include='all')
+```
+
+------------------------------------------------------------------------
+
+### Specific statistics
+
+We can also explore specific statistics
+
+The penguins split by species show a specific relationship between weight and flipper length, where the Adelie female penguins are the lighest and have the shortest flippers.
+
+```{python, warning = FALSE, message = FALSE}
+(penguins_df
+.dropna()
+.groupby(["species", "sex"])
+.agg({"body_mass_g": "mean", "flipper_length_mm": "mean", "sex": "count"})
+.sort_index()
+)
+```
+
+Looks like the Adelie are the lightest penguin. I want to see their distribution along with the overall distribution.
+
+```{python}
+smaller = penguins_df[penguins_df.species=="Adelie"].dropna()
+smaller
+```
+
+### Plot Section
+
+Let's move on to some plots, for the overall distributions and for just the Adelie penguins. The overall distribution of the data by species shows some overlap in body weight for Adelie/Chinstrap, but more of a separation for the Gentoo penguins.
+
+```{r}
+penguin_plot <- py$smaller %>% 
+  filter(!is.na(sex)) %>% 
+  ggplot(aes(body_mass_g, fill = sex)) + 
+  geom_density(color = "white", alpha = 0.5) +
+    scale_fill_manual(values = c("darkorange","purple")) +
+  labs(x = "Penguin Bins")
+
+penguin_plot
+```

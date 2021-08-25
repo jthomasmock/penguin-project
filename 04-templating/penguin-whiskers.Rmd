@@ -1,0 +1,22 @@
+---
+title: "{{species}} Penguin"
+output: html_document
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+
+smaller <- penguins %>% 
+  filter(species == "{{species}}", 
+         !is.na(body_mass_g))
+```
+We have data about `r nrow(penguins)` penguins. Only `r nrow(penguins) - nrow(smaller)` are classified as {{species}}. The distribution of the {{species}} penguins are shown below:
+
+```{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+
+{{long_prose}}

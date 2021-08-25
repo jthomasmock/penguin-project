@@ -1,0 +1,13 @@
+name: reticulate-doc
+title: reticulate-doc
+username: rstudio
+account: rstudio
+server: unselfish-tuna.staging.eval.rstudio.com
+hostUrl: https://unselfish-tuna.staging.eval.rstudio.com/rsconnect/__api__
+appId: 11
+bundleId: 11
+url: https://unselfish-tuna.staging.eval.rstudio.com/rsconnect/content/dc94f54b-d97b-428b-b214-85f705ce6fe8/
+when: 1629929773.52779
+lastSyncTime: 1629929773.52781
+asMultiple: FALSE
+asStatic: FALSE

@@ -1,0 +1,5 @@
+
+```{r}
+blastula::render_connect_email(input = "control-document/penguin-emailer.Rmd")
+```
+

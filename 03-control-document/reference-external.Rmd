@@ -1,0 +1,27 @@
+---
+title: "Penguins"
+date: 2020-08-11
+output: html_document
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+knitr::read_chunk("penguins.R")
+```
+
+```{r, smaller-penguins, echo = FALSE}
+```
+
+We have data about `r nrow(penguins)` penguins. Only `r nrow(penguins) - nrow(smaller)` are classified as Adelie. The distribution of theAdelie penguins are shown below:
+
+```{r, plot-penguins, echo = FALSE}
+```
+
+```{r, complex-modeling, echo = TRUE}
+```
+
+```{r}
+model_metrics
+```
+

@@ -1,0 +1,16 @@
+---
+title: "Penguins"
+date: 2020-08-11
+output: html_document
+---
+
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+
+species_sel <- "Chinstrap"
+```
+
+```{r, child=if (species_sel == “Adelie”) “a-report.Rmd”}
+```

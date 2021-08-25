@@ -1,0 +1,17 @@
+---
+output: html_document
+---
+
+```{r, echo = FALSE}
+smaller <- penguins %>% 
+  filter(species == "Adelie", 
+         !is.na(body_mass_g))
+```
+We have data about `r nrow(penguins)` penguins. Only 
+`r nrow(penguins) - nrow(smaller)` are classified as Adelie. The distribution of theAdelie penguins are shown below:
+
+```{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
