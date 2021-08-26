@@ -15,7 +15,7 @@ install.packages(all_packages)
 
 The basic pattern of interacting with this set of code examples will be to go from 01 - 04 in the folders.
 
-The corresponding slides are available at [https://bit.ly/marvelRMD](https://bit.ly/marvelRMD)
+The corresponding slides are available at in [PDF](Higher, further, faster with Marvelous R Markdown.pdf).
 
 ```
 # A tibble: 18 × 1
