@@ -2,6 +2,9 @@
 
 The full [Content Package](https://docs.google.com/document/d/1VKGs1G9GcQcv4pCYFbK68_LDh72ODiZsIxXLN0z-zD4/) with details about the presentation and summaries.
 
+
+[![YouTube Video](youtube-screenshot.png)](https://www.youtube.com/watch?v=WkF7nqEYF1E)
+
 * [YouTube recording](https://www.youtube.com/watch?v=WkF7nqEYF1E)
 * The corresponding slides are available at in [PDF](rmd-slides.pdf)
 
