@@ -1,0 +1,905 @@
+---
+title: "Higher, further, faster with Marvelous R Markdown"
+author: "Thomas Mock"
+output:
+  xaringan::moon_reader:
+    self-contained: true
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      countIncrementalSlides: false
+    seal: false
+---
+
+class: middle
+background-image: url("title-slide.png")
+background-size: contain
+
+.pull-left[
+
+# Higher, further, faster
+# with Marvelous R Markdown
+
+### [`@thomas_mock`](https://twitter.com/thomas_mock)
+
+]
+---
+
+```{css, eval = TRUE, include = FALSE}
+/* custom.css */
+
+.title-slide {
+  background-image: url(marvel-back.png);
+}
+
+.left-code {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: small;
+}
+
+.right-code {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: right;
+  font-size: 50%;
+}
+
+.right-plot {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+
+.bold-blue{
+  color: blue;
+  font-weight: bold;
+}
+  
+
+.bold-red{
+  color: red;
+  font-weight: bold;
+}
+
+.remark-code{line-height: 1.5; font-size: 70%}
+
+.tiny .remark-code { 
+  font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
+  font-size: 40%; !important;
+  }
+  
+
+
+```
+
+
+### The Heroine's Journey (sans spoilers)
+
+.pull-left[
+* Act 1: Story is setup (Here's the tool)  
+
+
+* Act 2: Complication arises (Here's the problem)  
+
+
+* Act 3: Heroine finds resolution (Here's a solution)  
+
+]
+
+--
+
+.pull-right[
+
+![Captain marvel falling at various stages during her life](https://media2.giphy.com/media/1PgNr5Qlxs936kP2vv/giphy.gif?cid=ecf05e47zltd3u68rrc6jmyy4rlzh21khs3q33m7btux0o6n&rid=giphy.gif&ct=g)
+
+]
+
+---
+
+class: middle
+background-image: url("split.png")
+background-size: contain
+.pull-left[
+
+# RMarkdown Taxonomy
+
+]
+
+.pull-right[
+
+### Literate Programming
+
+### Data Products
+
+### Control Documents
+
+### Templating
+
+
+]
+
+---
+
+class: middle, right
+background-image: url("literate.png")
+background-size: contain
+
+# Literate Programming
+
+---
+
+class: bottom, middle, inverse
+
+background-image: url("capt-marvel.png")
+
+
+# Goal: Capture code, text/comments, and output in a single document
+
+---
+
+
+.pull-left[
+
+### Literate Programming
+
+> A programming paradig introduced by Donald Knuth in which a computer program is given an explanation of its logic in a <span style="color:blue;font-weight:bold;">natural language</span>, such as English, interspersed with snippets of macros and traditional <span style="color:red;font-weight:bold;">source code</span>, from which compilable source code can be generated.
+
+[Wikipedia/Literate_programming](https://en.wikipedia.org/wiki/Literate_programming)
+
+]
+
+.right-code[
+
+````markdown
+---
+title: "Penguins"
+data: 2020-08-11
+output: html_document
+---
+
+`r ''````{r setup, include=FALSE}
+
+library(ggplot2)
+library(dplyr)
+library(palmerpenguins)
+
+smaller <- penguins %>% 
+  filter(body_mass_g <= 4000)
+```
+
+The Adelie penguins are smaller than the other types 
+of penguins. The plot generated above indicated a 
+distribution of penguins weighing less than 4 kilograms.
+
+`r ''````{r echo=FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+````
+
+]
+
+
+---
+
+
+
+
+
+.pull-left[
+
+### Visual RMarkdown
+
+Live as of RStudio 1.4 (released in Jan-21)!!!
+
+* Visual editing for all of Pandoc markdown
+* Extensive support for citations
+* Scientific and technical writing features, including LaTeX
+* Writing productivity w/ real time spell-checking
+* Tight integration with source editing
+* Rich keyboard support and can use the `⌘ /` shortcut to insert just about *anything*
+
+[Visual Editor Guide](https://rstudio.github.io/visual-markdown-editing/)
+
+]
+
+.pull-right[
+
+![Screenshot of the RStudio Visual Editor highlighting the formatted output of text, tables, and graphics. ](https://rstudio.github.io/visual-markdown-editing/images/visual-editing.png)
+]
+
+---
+
+### Not *just* for R
+
+* Python via `{reticulate}`
+* SQL
+* CSS or Javascript
+* Bash, Rcpp, Stan, and others
+
+All together a total <span style="color:red;font-weight:bold">52</span> possible language engines from `{knitr}`.
+
+---
+
+class: middle, right
+background-image: url("data-product.png")
+background-size: contain
+
+# Data Product
+
+---
+
+class: inverse, bottom
+background-image: url("capt-marvel.png")
+
+# Goal: Use R to generate final output for consumption
+
+---
+
+### Data Products
+
+* Reports - HTML, PDF, RTF, Github document
+* Presentations - `xaringan`, Powerpoint, `reveal.js`, beamer
+* Dashboards - `flexdashboard` either as static or with `shiny`
+* Entire websites - `blogdown`, `distill`
+* Books via `bookdown`
+* HTMLWidgets - `DT`, `reactable`, `plotly`, `crosstalk` and more!
+
+---
+
+class: middle, left
+background-image: url("control.png")
+background-size: contain
+
+# Control Document
+
+---
+class: inverse, bottom
+background-image: url("capt-marvel.png")
+
+# Goal: Modularize data science tasks, use RMarkdown to control code flow
+
+---
+
+### Knit with Parameters
+
+````markdown
+---
+title: "Penguins"
+date: 2020-08-11
+output: html_document
+params:
+  species: Adelie
+---
+`r ''````{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+smaller <- penguins %>% 
+  filter(species == params$species, 
+         !is.na(body_mass_g))
+```
+We have data about `r knitr::inline_expr("nrow(penguins)")`  penguins.  Only 
+`r knitr::inline_expr("nrow(penguins) - nrow(smaller)")` are classified as
+`r knitr::inline_expr("params$species")`. The distribution of the 
+`r knitr::inline_expr("params$species")` penguins are shown below:
+`r ''````{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+````
+
+---
+
+### Reference .R files
+
+.pull-left[
+
+````markdown
+---
+title: "Penguins"
+date: 2020-08-11
+output: html_document
+---
+`r ''````{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+knitr::read_chunk(‘penguins.R’)
+```
+
+`r ''````{r, smaller-penguins, echo = FALSE}
+```
+
+We have data about `r knitr::inline_expr("nrow(penguins)")` 
+penguins.
+
+`r ''````{r, plot-penguins, echo = FALSE}
+```
+````
+
+]
+
+
+.pull-right[
+#### `penguins.R`
+```{r, eval = FALSE}
+## ---- smaller-penguins
+smaller <- penguins %>% 
+  filter(species == "Adelie”, 
+         !is.na(body_mass_g))
+## ---- plot-penguins
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+
+]
+
+---
+
+# Child Documents
+
+.pull-left[
+
+### adelie-report.Rmd
+
+````markdown
+
+---
+output: html_document
+---
+`r ''````{r, echo = FALSE}
+smaller <- penguins %>% 
+  filter(species == "Adelie", 
+         !is.na(body_mass_g))
+```
+We have data on `r knitr::inline_expr("nrow(penguins)")` penguins.
+The distribution of the Adelie 
+penguins are shown below:
+
+`r ''````{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+
+````
+]
+
+.pull-right[
+
+### Parent Document
+
+Uses the child document by name.
+
+````markdown
+---
+title: "Penguins"
+date: 2020-08-11
+output: html_document
+---
+
+
+`r ''````{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+`r ''````{r, child=c("adelie-report.Rmd”)}
+```
+````
+
+]
+
+---
+
+# Logical Child documents
+
+.pull-left[
+
+### report.Rmd
+
+````markdown
+---
+output: html_document
+---
+
+`r ''````{r, echo = FALSE}
+smaller <- penguins %>% 
+  filter(species == "Adelie", 
+         !is.na(body_mass_g))
+```
+We have data on `r knitr::inline_expr("nrow(penguins)")` penguins.
+The distribution of the Adelie 
+penguins are shown below:
+
+`r ''````{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+
+````
+]
+
+.pull-right[
+
+````markdown
+---
+title: "Penguins"
+date: 2020-08-11
+output: html_document
+---
+
+
+`r ''````{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+
+sp <- "Chinstrap"
+```
+
+`r ''````{r, child=if (sp == "Adelie”) "report.Rmd”}
+```
+````
+
+Uses report code only if specific condition is met.
+
+]
+
+---
+
+.pull-left[
+
+# Blastula Emails
+
+````markdown
+---
+title: "Penguins"
+date: 2020-08-11
+output: html_document
+---
+
+`r ''````{r setup, include = FALSE}
+library(tidyverse)
+library(blastula)
+```
+`r ''````{r penguin-plot, echo = FALSE}
+palmerpenguins::penguins %>% 
+  filter(species == "Adelie", 
+         !is.na(body_mass_g)) %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+
+`r ''````{r connect_email, echo = FALSE}
+render_connect_email(
+  input = "penguin-email.Rmd”) %>%
+  attach_connect_email(
+    subject = "Penguin Report")
+```
+````
+
+]
+
+.pull-right[
+
+### `penguin-email.Rmd`
+
+````markdown
+---
+title: "Penguins Report"
+date: 2020-08-11
+output: blastula::blastula_email
+---
+
+
+`r ''````{r packages, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+Important update on the state of 
+the penguins!
+
+`r ''````{r penguin-plot, echo = FALSE}
+```
+````
+When parent document is rendered, it generates a HTML email, can include arbitrary R output like `ggplot2` or even tables.
+
+]
+
+---
+
+class: middle, right, inverse
+background-image: url("template.gif")
+background-size: contain
+
+# Templating
+
+---
+
+class: inverse, bottom
+background-image: url("capt-marvel.png")
+
+# Goal: Don't repeat yourself, generate input templates or output documents from code
+
+---
+
+.pull-left[
+
+````markdown
+---
+title: "Penguins"
+date: 2020-08-11
+output: html_document
+params:
+  species: Adelie
+---
+
+`r ''````{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+
+smaller <- penguins %>% 
+  filter(species == params$species, 
+         !is.na(body_mass_g))
+```
+We have data about `r knitr::inline_expr("nrow(penguins)")` penguins. 
+The distribution of the 
+`r knitr::inline_expr("params$species")` penguins are shown below:
+
+`r ''````{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+````
+
+]
+
+.pull-right[
+
+```{r, eval = FALSE}
+rmarkdown::render(
+  “penguin.rmd”,
+  params = list(species = “Gentoo”)
+)
+```
+
+Uses report code with new parameter.
+
+]
+
+---
+
+.pull-left[
+
+````markdown
+---
+title: "Penguins"
+date: 2020-08-11
+output: html_document
+params:
+  species: Adelie
+---
+
+`r ''````{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+
+smaller <- penguins %>% 
+  filter(species == params$species, 
+         !is.na(body_mass_g))
+```
+We have data about `r knitr::inline_expr("nrow(penguins)")` penguins. 
+The distribution of the 
+`r knitr::inline_expr("params$species")` penguins are shown below:
+
+`r ''````{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+````
+
+]
+
+.pull-right[
+
+```{r, eval = FALSE}
+render_fun <- function(penguin){
+  rmarkdown::render(
+    input = "penguins-report.rmd",
+    params = list(species = penguin),
+    output_file = glue::glue(
+      "{penguin}-report.html"
+      )
+  )
+}
+
+distinct(penguins, as.character(species)) %>% 
+  pull() %>% 
+  purrr::walk(render_fun)
+```
+
+```
+Adelie-report.html 
+Chinstrap-report.html 
+Gentoo-report.html
+```
+
+]
+
+---
+
+
+
+.pull-left[
+## Loop within a doc
+
+````markdown
+---
+title: "Penguin Report"
+output: html_document
+---
+  
+`r ''````{r penguin function, include=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(glue)
+knitr::opts_chunk$set(echo=FALSE, fig.width=6, 
+  message=FALSE)
+source(“multiplot.R”)
+penguins <- palmerpenguins::penguins %>% 
+  filter(!is.na(bill_length_mm),  
+   !is.na(flipper_length_mm))
+```
+
+`r ''````{r loop-output, results="asis"}
+penguins %>% 
+  distinct(species) %>% 
+  pull(species) %>% 
+  as.character() %>% 
+  walk(multiplot)
+```
+````
+
+]
+
+.pull-right[
+#### `multiplot.R`
+```{r, eval = FALSE}
+multiplot <- function(penguin_name){
+  glue("  \n### {penguin_name}  \n  \n") %>% cat() 
+
+  df_pen <- penguins %>% 
+    filter(as.character(species) == penguin_name)
+  
+  flipper_len <- df_pen %>% 
+    summarize(mean = mean(flipper_length_mm)) %>% 
+    pull(mean) %>% 
+    round(digits = 1)  
+
+  glue::glue("There are {nrow(df_pen)} observations of {penguin_name} penguins. The average flipper length is {flipper_len}.  \n") %>% cat()
+
+  plot_out <- df_pen %>% 
+    ggplot(aes(x = bill_length_mm, 
+               y = flipper_length_mm)) +
+    geom_point() +
+    labs(x = "Bill Length", 
+         y = "Flipper Length", 
+         title = penguin_name)
+  
+  print(plot_out)
+
+  cat("  \n  \n")
+}
+```
+
+]
+
+---
+
+# `whisker` vs `glue`...
+
+--
+... is `{one}` vs `{{two}}`
+
+--
+
+```{r}
+# logic templating
+glue::glue("There are {nrow(mtcars)} rows in the mtcars dataset")
+```
+
+--
+
+```{r}
+rows_in <- nrow(mtcars)
+whisker::whisker.render('There are {{rows_in}} rows in the mtcars dataset')
+```
+
+--
+
+```{r}
+# logicless templating
+whisker::whisker.render('There are {{nrow(mtcars)}} rows in the mtcars dataset')
+```
+
+---
+
+
+.pull-left[
+
+````markdown
+---
+title: "{{species}} Penguin"
+output: html_document
+---
+`r ''````{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+
+smaller <- penguins %>% 
+  filter(species == “{{species}}”, 
+         !is.na(body_mass_g))
+```
+We have data about `r knitr::inline_expr("nrow(penguins)")` penguins.
+The distribution of the {{species}} penguins are shown below:
+
+`r ''````{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+{{long_prose}}
+````
+
+]
+
+.pull-right[
+
+````markdown
+---
+title: "Adelie Penguin"
+output: html_document
+---
+`r ''````{r setup, include = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+
+smaller <- penguins %>% 
+  filter(species == Adelie, !is.na(body_mass_g))
+```
+We have data about `r knitr::inline_expr("nrow(penguins)")` penguins. 
+The distribution of the Adelie penguins are shown below:
+`r ''````{r, echo = FALSE}
+smaller %>% 
+  ggplot(aes(body_mass_g)) + 
+  geom_histogram(binwidth = 100)
+```
+### Mating
+The mating season begins with the Antarctic spring in October.
+The penguins create nests by piling little stones in circles. 
+Once the egg is laid in December the parents take turns incubating the egg and going to hunt. 
+The parent that stays behind does not eat during their turn with the egg. 
+Once the hatched chick is about 3 weeks old both parents will abandon it, returning to the sea to hunt. 
+The downy chicks gather into a group called a crèche to keep each other warm. 
+They will start to hunt at about 9 weeks old once their down has been replaced with waterproof feathers.
+````
+
+]
+
+---
+
+### `whisker` function
+
+```{code, eval = FALSE}
+use_penguin_template <- function(species, long_prose){
+  
+  raw_rmd <- readLines("penguin-whisker.Rmd")
+  
+  filled_rmd <- whisker::whisker.render(raw_rmd)
+  
+  writeLines(
+    text = filled_rmd,
+    con = glue::glue("{species}-report.rmd")
+  )
+}
+```
+```text
+species <- "Adelie"
+
+long_prose <- "### Mating\n\nThe mating season begins with the Antarctic spring in October.
+The penguins create nests by piling little stones in circles. 
+Once the egg is laid in December the parents take turns incubating the egg and going to hunt. 
+The parent that stays behind does not eat during their turn with the egg. 
+Once the hatched chick is about 3 weeks old both parents will abandon it, returning to the sea to hunt. 
+The downy chicks gather into a group called a crèche to keep each other warm. 
+They will start to hunt at about 9 weeks old once their down has been replaced with waterproof feathers."
+```
+```{r, eval = FALSE}
+use_penguin_template(species, long_prose)
+```
+
+---
+
+.pull-left[
+
+### RMarkdown + RStudio Connect
+
+RStudio Connect is a hosting and execution platform for Shiny, [RMarkdown](https://docs.rstudio.com/connect/user/scheduling/), Plumber (also Jupyter, Flask, Dash,  & Streamlit)
+
+Can execute/schedule RMarkdown for all sorts of things like: 
+
+- [Self-service parameterized RMarkdown](https://docs.rstudio.com/connect/user/param-rmarkdown/#publish-param-rmarkdown) for non-tech users
+
+- [Extract Transform Load](https://solutions.rstudio.com/examples/apps/output-file-etl/) from SQL, APIs or Spark for example 
+
+- Automated reports with [logging/history](https://docs.rstudio.com/connect/user/report-history/)
+
+- [Long model training steps](https://solutions.rstudio.com/tour/bike_predict/) and save model upon completion
+
+- Send blastula emails [conditionally](https://solutions.rstudio.com/examples/blastula/conditional-example/) or on a [schedule](https://solutions.rstudio.com/examples/blastula-overview/)
+
+[docs.rstudio.com/connect/user/rmarkdown/](https://docs.rstudio.com/connect/user/rmarkdown/)
+
+]
+
+.pull-right[
+
+```{r, echo = FALSE, out.width="60%"}
+knitr::include_graphics("rsc.png")
+```
+
+]
+
+---
+
+## You have the power, now use it!
+
+.pull-left[
+
+### Follow-up reading
+
+* Emily Riederer’s [RMD Driven Development](https://emilyriederer.netlify.app/post/rmarkdown-driven-development/)  
+
+* Sharla Gelfand’s [RMD templating](https://sharla.party/post/usethis-for-reporting/)  
+
+* My Meta RMarkdown [blogpost](https://themockup.blog/posts/2020-07-25-meta-rmarkdown/)  
+
+* The fantastic [RMarkdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)  
+
+* RMarkdown [Definitive Guide book](https://bookdown.org/yihui/rmarkdown/)  
+
+* [Rethinking Reporting with Automation](https://www.rstudio.com/resources/webinars/rethink-reporting-with-automation/) within the Insurance Industry  
+
+* Using R to Enhance [Clinical Reporting](https://www.rstudio.com/resources/webinars/using-r-to-drive-agility-in-clinical-reporting/) within the Life Sciences industry  
+
+
+* One of my favorites, [Avoid Dashboard Fatigue](https://www.rstudio.com/resources/webinars/avoid-dashboard-fatigue/)  
+
+
+
+]
+]
+
+.pull-right[
+
+![Gif of captain marvel clapping her hands in excitement!](https://c.tenor.com/weImnu0v4mQAAAAC/brie-larson-captain-marvel.gif)
+]
+
+---
+class: center, middle
+background-size: contain
+background-image: url("bonus.png")
+
+```{r, out.width="25%", echo = FALSE}
+knitr::include_graphics("howard-watermelon.jpeg")
+```
