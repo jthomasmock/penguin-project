@@ -1,5 +1,10 @@
 ### RMarkdown Readme
 
+The full [Content Package](https://docs.google.com/document/d/1VKGs1G9GcQcv4pCYFbK68_LDh72ODiZsIxXLN0z-zD4/) with details about the presentation and summaries.
+
+* [YouTube recording](https://www.youtube.com/watch?v=WkF7nqEYF1E)
+* The corresponding slides are available at in [PDF](rmd-slides.pdf)
+
 You will want to install the following packages if you haven't already:
 
 ```{r}
@@ -15,7 +20,7 @@ install.packages(all_packages)
 
 The basic pattern of interacting with this set of code examples will be to go from 01 - 04 in the folders.
 
-The corresponding slides are available at in [PDF](rmd-slides.pdf).
+
 
 ```
 # A tibble: 18 × 1
